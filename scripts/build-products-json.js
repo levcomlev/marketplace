@@ -74,6 +74,8 @@ const products = index.map(function (id) {
     category: p.category,
     link_ozon: p.link_ozon || null,
     link_wb: p.link_wb || null,
+    price: p.price != null ? p.price : null,
+    price_old: p.price_old != null ? p.price_old : null,
     has_digital: p.has_digital || false,
     digital_price: p.digital_price
   };
@@ -113,6 +115,8 @@ index.forEach(function (id) {
     material: p.material,
     link_ozon: p.link_ozon || null,
     link_wb: p.link_wb || null,
+    price: p.price != null ? p.price : null,
+    price_old: p.price_old != null ? p.price_old : null,
     has_digital: p.has_digital || false,
     digital_price: p.digital_price,
     digital_format: p.digital_format || null

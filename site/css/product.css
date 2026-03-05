@@ -191,6 +191,23 @@ html {
   color: inherit;
 }
 
+.product__price {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.product__price-old {
+  text-decoration: line-through;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  margin-right: 0.25em;
+}
+
+.product__price-current {
+  color: var(--color-text);
+}
+
 /* плавная прокрутка к якорю отзывов */
 .product-page {
   scroll-margin-top: 0;

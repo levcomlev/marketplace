@@ -136,8 +136,15 @@
       ratingHtml = '<a href="#product-reviews" class="product__rating product__rating-link">⭐ ' + reviewsLabel(reviewsCount) + '</a>';
     }
 
-    var ratingRowHtml = (ratingHtml || actions)
-      ? '<div class="product__rating-row">' + (ratingHtml || '') + (actions ? '<div class="product__actions">' + actions + '</div>' : '') + '</div>'
+    var priceHtml = '';
+    if (data.price != null) {
+      var priceStr = data.price + ' ₽';
+      var oldStr = data.price_old != null ? '<span class="product__price-old">' + escapeHtml(String(data.price_old)) + ' ₽</span> ' : '';
+      priceHtml = '<p class="product__price">' + oldStr + '<span class="product__price-current">' + escapeHtml(String(data.price)) + ' ₽</span></p>';
+    }
+
+    var ratingRowHtml = (ratingHtml || priceHtml || actions)
+      ? '<div class="product__rating-row">' + (ratingHtml || '') + (priceHtml || '') + (actions ? '<div class="product__actions">' + actions + '</div>' : '') + '</div>'
       : '';
 
     var reviewsHtml = '';

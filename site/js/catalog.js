@@ -84,6 +84,12 @@
       actions += '<span class="product-card__btn product-card__btn--secondary">Цифра ' + p.digital_price + ' ₽</span>';
     }
 
+    const priceHtml = (p.price != null)
+      ? '<p class="product-card__price">' +
+        (p.price_old != null ? '<span class="product-card__price-old">' + p.price_old + ' ₽</span> ' : '') +
+        '<span class="product-card__price-current">' + p.price + ' ₽</span></p>'
+      : '';
+
     const ratingHtml = (p.rating != null && p.reviews_count != null)
       ? '<p class="product-card__rating">⭐ ' + escapeHtml(String(p.rating)) + ' • ' + reviewsLabel(p.reviews_count) + '</p>'
       : '';
@@ -96,6 +102,7 @@
         '</div>' +
         '<div class="product-card__body">' +
           '<h3 class="product-card__title"><a href="' + escapeHtml(titleLink) + '">' + title + '</a></h3>' +
+          (priceHtml ? priceHtml : '') +
           (ratingHtml ? ratingHtml : '') +
           (actions ? '<div class="product-card__actions">' + actions + '</div>' : '') +
         '</div>' +

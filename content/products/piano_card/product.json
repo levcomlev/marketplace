@@ -11,6 +11,8 @@
   "format": "A4",
   "country": "Россия",
   "material": "Бумага",
+  "price": 364,
+  "price_old": 2000,
   "has_digital": false,
   "digital_price": null,
   "digital_format": null,
