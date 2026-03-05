@@ -129,23 +129,26 @@
 
 ```
 marketplace/
-├── docs/                 # Документация
-│   ├── WORKFLOW.md       # Как коммитить и откатываться
+├── docs/
+│   ├── WORKFLOW.md       # Коммиты и откат
 │   ├── PAYMENT_TAX.md    # Оплата и чеки для ИП
-│   └── SITE_STRUCTURE.md # Список страниц и блоков для вёрстки
-├── design/               # Дизайн-токены (цвета, шрифты, отступы)
+│   ├── SITE_STRUCTURE.md # Страницы и блоки для вёрстки
+│   └── FILE_STRUCTURE.md # Система файлов: один товар — папка, одна функция — файл
+├── design/
 │   └── design-tokens.md
-├── content/              # Контент и структура данных товаров
+├── content/
 │   ├── README.md
-│   └── products.example.json
-├── site/                 # Исходники сайта (вёрстка)
-│   ├── index.html
-│   ├── css/
-│   ├── js/
+│   └── products/        # один товар = папка <id>/product.json, список index.json
+├── site/
+│   ├── index.html, catalog.html, product.html
+│   ├── css/             # один блок = один файл (header.css, catalog.css и т.д.)
+│   ├── js/              # одна функция = один файл (menu.js, catalog.js и т.д.)
 │   └── images/
+│       ├── shared/      # логотипы, иконки
+│       └── products/<id>/  # картинки одного товара, без пересечений
 ├── .gitignore
-├── PLAN.md               # Этот план
-└── README.md             # О проекте и как работать
+├── PLAN.md
+└── README.md
 ```
 
 При необходимости позже можно добавить папки `site/pages/`, `site/components/` и т.д. — не придётся ломать уже сделанное.

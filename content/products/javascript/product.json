@@ -1,0 +1,14 @@
+{
+  "id": "javascript",
+  "title": "JavaScript обучающие карточки, шпаргалка по синтаксису, DOM, массивы и объекты",
+  "description_short": "Обучающие карточки: JavaScript, синтаксис, DOM, массивы и объекты.",
+  "description_full": "JavaScript — обучающие карточки. Шпаргалка по синтаксису, DOM, массивы и объекты.",
+  "image_main": "images/products/javascript/main.jpg",
+  "image_thumb": "images/products/javascript/thumb.jpg",
+  "category": "Программирование",
+  "has_digital": false,
+  "digital_price": null,
+  "digital_format": null,
+  "link_ozon": "https://www.ozon.ru/product/3677185373/",
+  "link_wb": ""
+}

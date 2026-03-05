@@ -1,0 +1,14 @@
+{
+  "id": "python",
+  "title": "Python обучающие карточки, шпаргалка по синтаксису, функции и hotkeys PyCharm",
+  "description_short": "Обучающие карточки: Python, синтаксис, функции, hotkeys PyCharm.",
+  "description_full": "Python — обучающие карточки. Шпаргалка по синтаксису, функции и hotkeys PyCharm.",
+  "image_main": "images/products/python/main.jpg",
+  "image_thumb": "images/products/python/thumb.jpg",
+  "category": "Программирование",
+  "has_digital": false,
+  "digital_price": null,
+  "digital_format": null,
+  "link_ozon": "https://www.ozon.ru/product/3588518361/",
+  "link_wb": ""
+}
