@@ -1,0 +1,46 @@
+/* Шапка: название, навигация */
+
+.site-header {
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.site-header__inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: var(--space-m) var(--space-l);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-l);
+}
+
+.site-header__brand {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--color-text);
+}
+
+.site-header__brand:hover {
+  text-decoration: none;
+  color: var(--color-text);
+}
+
+.site-header__nav {
+  display: flex;
+  gap: var(--space-l);
+}
+
+.site-header__nav a {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.site-header__nav a:hover {
+  color: var(--color-accent);
+}
+
+.site-header__nav a[href="index.html"],
+.site-header__nav a[href="/"] {
+  /* текущая страница — опционально выделить */
+}

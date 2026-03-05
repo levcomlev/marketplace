@@ -1,0 +1,26 @@
+/* Дизайн-токены — цвета, шрифты, отступы */
+
+:root {
+  --color-bg: #ffffff;
+  --color-text: #1a1a1a;
+  --color-text-muted: #666;
+  --color-accent: #2563eb;
+  --color-link: #2563eb;
+  --color-border: #e5e7eb;
+
+  --font-primary: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --space-xs: 4px;
+  --space-s: 8px;
+  --space-m: 16px;
+  --space-l: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  --max-width: 1200px;
+  --max-width-catalog: 1280px;
+  --catalog-gap: 20px;
+  --card-width: 224px;
+  --card-radius: 14px;
+  --radius: 8px;
+}

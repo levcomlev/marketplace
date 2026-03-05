@@ -5,10 +5,48 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Komlew.posters — обучающие плакаты и карточки</title>
   <meta name="description" content="Обучающие плакаты и карточки: музыка, программирование, йога, дети. Заказать с доставкой на Ozon и Wildberries или купить цифровую версию на сайте.">
-  <!-- Подключение стилей добавить при вёрстке: tokens.css, base.css, header.css и т.д. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/catalog.css">
 </head>
 <body>
-  <!-- Шапка, герой, блок «Где купить», хиты/категории, подвал — см. docs/SITE_STRUCTURE.md -->
-  <p>Главная страница. Вёрстка по шагам согласно SITE_STRUCTURE.md.</p>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__brand" href="index.html">Komlew.posters</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="catalog" id="catalog">
+      <h2 class="catalog__title">Каталог</h2>
+      <div class="catalog__filters" id="catalog-filters" aria-label="Фильтр по категории"></div>
+      <div class="catalog__grid" id="catalog-grid"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <section class="site-footer__section">
+        <h2 class="site-footer__title">Контакты</h2>
+        <div class="site-footer__contacts">
+          <a href="mailto:levcomlev@gmail.com">levcomlev@gmail.com</a>
+          <a href="https://t.me/lewkomlew" target="_blank" rel="noopener noreferrer">Telegram</a>
+        </div>
+      </section>
+      <section class="site-footer__section">
+        <h2 class="site-footer__title">Где купить</h2>
+        <div class="site-footer__links">
+          <a href="https://www.ozon.ru/seller/komlew" target="_blank" rel="noopener noreferrer">Ozon</a>
+          <a href="https://www.wildberries.ru" target="_blank" rel="noopener noreferrer">Wildberries</a>
+        </div>
+      </section>
+    </div>
+  </footer>
+  <script src="js/catalog.js"></script>
 </body>
 </html>
