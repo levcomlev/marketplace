@@ -9,23 +9,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="css/base.css">
-  <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/footer.css">
   <link rel="stylesheet" href="css/product.css">
 </head>
 <body>
-  <header class="site-header">
-    <div class="site-header__inner">
-      <a class="site-header__brand" href="index.html">
-        <span class="site-header__brand-name">Komlew.posters</span>
-        <span class="site-header__tagline">Обучающие плакаты и карточки</span>
-      </a>
-    </div>
-  </header>
-
   <main class="product-page">
     <p class="product-page__back"><a href="index.html">← В каталог</a></p>
     <div id="product-root"></div>
+    <div id="product-recommend" class="product-recommend" hidden></div>
     <div id="product-error" class="product-error" hidden>
       <p>Товар не найден.</p>
       <p><a href="index.html">Вернуться в каталог</a></p>

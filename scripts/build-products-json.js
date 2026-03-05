@@ -62,6 +62,7 @@ index.forEach(function (id) {
   const full = {
     id: p.id,
     title: p.title,
+    description_short: p.description_short || '',
     description_full: p.description_full || '',
     image_main: image_main,
     image_thumb: image_thumb,

@@ -95,7 +95,7 @@
   function renderProduct(data) {
     var images = data.images && data.images.length ? data.images : [data.image_main];
     var title = escapeHtml(data.title);
-    var desc = escapeHtml(data.description_full || '');
+    var shortDesc = data.description_short ? escapeHtml(data.description_short) : '';
     var actions = '';
     if (data.link_ozon) {
       actions += '<a class="product__btn product__btn--ozon" href="' + escapeHtml(data.link_ozon) + '" target="_blank" rel="noopener noreferrer">Купить на Ozon</a>';
@@ -107,16 +107,69 @@
       actions += '<span class="product__btn product__btn--digital product__btn--secondary">Цифровая версия — ' + data.digital_price + ' ₽</span>';
     }
 
+    var specs = [];
+    if (data.type) specs.push({ label: 'Тип', value: data.type });
+    if (data.subject) specs.push({ label: 'Предмет', value: data.subject });
+    if (data.format) specs.push({ label: 'Формат', value: data.format });
+    if (data.country) specs.push({ label: 'Страна', value: data.country });
+    if (data.material) specs.push({ label: 'Материал', value: data.material });
+    var specsHtml = specs.length
+      ? '<dl class="product__specs">' + specs.map(function (s) {
+          return '<dt class="product__specs-dt">' + escapeHtml(s.label) + '</dt><dd class="product__specs-dd">' + escapeHtml(s.value) + '</dd>';
+        }).join('') + '</dl>'
+      : '';
+
     var html =
-      renderGallery(document.getElementById('product-root'), images, data.title) +
-      '<div class="product__content">' +
-        '<h1 class="product__title">' + title + '</h1>' +
-        (desc ? '<div class="product__description">' + desc + '</div>' : '') +
-        (actions ? '<div class="product__actions">' + actions + '</div>' : '') +
+      '<div class="product__top">' +
+        '<div class="product__col-image">' +
+          renderGallery(null, images, data.title) +
+        '</div>' +
+        '<div class="product__col-info">' +
+          '<h1 class="product__title">' + title + '</h1>' +
+          (shortDesc ? '<div class="product__short-desc">' + shortDesc + '</div>' : '') +
+          specsHtml +
+          (actions ? '<div class="product__actions">' + actions + '</div>' : '') +
+        '</div>' +
       '</div>';
 
     document.getElementById('product-root').innerHTML = html;
     bindGallery(images);
+
+    fetch('data/products.json')
+      .then(function (r) { return r.json(); })
+      .then(function (allProducts) {
+        var currentId = data.id;
+        var currentCategory = data.category;
+        var sameCategory = allProducts.filter(function (p) {
+          return p.id !== currentId && p.category === currentCategory;
+        });
+        var krug = allProducts.filter(function (p) { return p.id === 'krug'; })[0];
+        var list = sameCategory.slice();
+        if (krug && krug.id !== currentId && list.every(function (p) { return p.id !== 'krug'; })) {
+          list.push(krug);
+        }
+        list = list.slice(0, 6);
+        if (list.length === 0) return;
+        var recommendEl = document.getElementById('product-recommend');
+        if (!recommendEl) return;
+        recommendEl.hidden = false;
+        recommendEl.innerHTML =
+          '<h2 class="product-recommend__title">Рекомендуем также</h2>' +
+          '<div class="product-recommend__grid">' +
+          list.map(function (p) {
+            var t = escapeHtml(p.title);
+            var link = 'product.html?id=' + encodeURIComponent(p.id);
+            var img = escapeHtml(p.image_thumb || p.image_main || '');
+            return '<a class="product-recommend__card" href="' + link + '">' +
+              '<span class="product-recommend__card-image-wrap">' +
+              '<img class="product-recommend__card-image" src="' + img + '" alt="" loading="lazy">' +
+              '</span>' +
+              '<span class="product-recommend__card-title">' + t + '</span>' +
+              '</a>';
+          }).join('') +
+          '</div>';
+      })
+      .catch(function () {});
   }
 
   function init() {
