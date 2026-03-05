@@ -60,7 +60,7 @@
 .catalog__grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: var(--catalog-gap);
+  gap: 8px;
 }
 
 @media (max-width: 1200px) {
@@ -70,9 +70,14 @@
 }
 
 @media (max-width: 768px) {
+  .catalog {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
   .catalog__grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-m);
+    gap: 6px;
   }
 }
 
