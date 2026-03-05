@@ -128,6 +128,10 @@
       ? '<p class="product__rating">⭐ ' + escapeHtml(String(data.rating)) + ' • ' + reviewsLabel(data.reviews_count) + '</p>'
       : '';
 
+    var ratingRowHtml = (ratingHtml || actions)
+      ? '<div class="product__rating-row">' + (ratingHtml || '') + (actions ? '<div class="product__actions">' + actions + '</div>' : '') + '</div>'
+      : '';
+
     var html =
       '<div class="product__top">' +
         '<div class="product__col-image">' +
@@ -135,15 +139,42 @@
         '</div>' +
         '<div class="product__col-info">' +
           '<h1 class="product__title">' + title + '</h1>' +
-          (ratingHtml ? ratingHtml : '') +
+          ratingRowHtml +
           (shortDesc ? '<div class="product__short-desc">' + shortDesc + '</div>' : '') +
           specsHtml +
-          (actions ? '<div class="product__actions">' + actions + '</div>' : '') +
         '</div>' +
       '</div>';
 
     document.getElementById('product-root').innerHTML = html;
     bindGallery(images);
+
+    var hasOzon = !!data.link_ozon;
+    var hasWb = !!data.link_wb;
+    var hasDigital = !!(data.has_digital && data.digital_price);
+    if (hasOzon || hasWb || hasDigital) {
+      var existingBar = document.getElementById('product-sticky-bar');
+      if (existingBar) existingBar.remove();
+      var bar = document.createElement('div');
+      bar.id = 'product-sticky-bar';
+      bar.className = 'product-sticky-bar';
+      var menuParts = [];
+      if (data.link_ozon) menuParts.push('<a class="product-sticky-bar__btn product-sticky-bar__btn--ozon" href="' + escapeHtml(data.link_ozon) + '" target="_blank" rel="noopener noreferrer">Купить на Ozon</a>');
+      if (data.link_wb) menuParts.push('<a class="product-sticky-bar__btn product-sticky-bar__btn--wb" href="' + escapeHtml(data.link_wb) + '" target="_blank" rel="noopener noreferrer">Купить на Wildberries</a>');
+      if (hasDigital) menuParts.push('<span class="product-sticky-bar__btn product-sticky-bar__btn--digital">Цифровая версия — ' + data.digital_price + ' ₽</span>');
+      bar.innerHTML =
+        '<button type="button" class="product-sticky-bar__toggle" id="product-sticky-bar-toggle" aria-expanded="false">Купить</button>' +
+        '<div class="product-sticky-bar__menu" id="product-sticky-bar-menu">' + menuParts.join('') + '</div>';
+      document.body.appendChild(bar);
+      document.body.classList.add('has-product-sticky-bar');
+      var toggleBtn = document.getElementById('product-sticky-bar-toggle');
+      var menuEl = document.getElementById('product-sticky-bar-menu');
+      if (toggleBtn && menuEl) {
+        toggleBtn.addEventListener('click', function () {
+          var open = bar.classList.toggle('is-open');
+          toggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      }
+    }
 
     fetch('data/products.json')
       .then(function (r) { return r.json(); })
