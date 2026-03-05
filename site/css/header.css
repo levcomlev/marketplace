@@ -16,14 +16,26 @@
 }
 
 .site-header__brand {
-  font-weight: 700;
-  font-size: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
   color: var(--color-text);
 }
 
 .site-header__brand:hover {
   text-decoration: none;
   color: var(--color-text);
+}
+
+.site-header__brand-name {
+  font-weight: 700;
+  font-size: 1.25rem;
+}
+
+.site-header__tagline {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--color-text-muted);
 }
 
 .site-header__nav {

@@ -10,6 +10,7 @@
     { value: 'inst:bass', label: 'Бас-гитара' },
     { value: 'inst:ukulele', label: 'Укулеле' },
     { value: 'inst:drum', label: 'Барабаны' },
+    { value: 'inst:circle', label: 'Кварто-квинтовый круг' },
     { value: 'Йога', label: 'Йога' },
     { value: 'Дети', label: 'Для детей' },
     { value: 'Планинг', label: 'Дисциплина' }
@@ -20,7 +21,8 @@
     piano: ['piano', 'piano_card', 'progression_accord'],
     bass: ['bass', 'bass_card'],
     ukulele: ['ukulele', 'ukulele_card'],
-    drum: ['drum', 'drum_cards']
+    drum: ['drum', 'drum_cards'],
+    circle: ['krug']
   };
 
   let products = [];
