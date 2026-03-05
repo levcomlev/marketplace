@@ -68,6 +68,12 @@
     });
   }
 
+  function reviewsLabel(n) {
+    if (n % 10 === 1 && n % 100 !== 11) return n + ' отзыв';
+    if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) return n + ' отзыва';
+    return n + ' отзывов';
+  }
+
   function renderCard(p) {
     const title = escapeHtml(p.title);
     const imgSrc = p.image_thumb || '';
@@ -78,6 +84,10 @@
       actions += '<span class="product-card__btn product-card__btn--secondary">Цифра ' + p.digital_price + ' ₽</span>';
     }
 
+    const ratingHtml = (p.rating != null && p.reviews_count != null)
+      ? '<p class="product-card__rating">⭐ ' + escapeHtml(String(p.rating)) + ' • ' + reviewsLabel(p.reviews_count) + '</p>'
+      : '';
+
     const titleLink = 'product.html?id=' + encodeURIComponent(p.id);
     return (
       '<article class="product-card">' +
@@ -86,6 +96,7 @@
         '</div>' +
         '<div class="product-card__body">' +
           '<h3 class="product-card__title"><a href="' + escapeHtml(titleLink) + '">' + title + '</a></h3>' +
+          (ratingHtml ? ratingHtml : '') +
           (actions ? '<div class="product-card__actions">' + actions + '</div>' : '') +
         '</div>' +
       '</article>'

@@ -119,6 +119,15 @@
         }).join('') + '</dl>'
       : '';
 
+    function reviewsLabel(n) {
+      if (n % 10 === 1 && n % 100 !== 11) return n + ' отзыв';
+      if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) return n + ' отзыва';
+      return n + ' отзывов';
+    }
+    var ratingHtml = (data.rating != null && data.reviews_count != null)
+      ? '<p class="product__rating">⭐ ' + escapeHtml(String(data.rating)) + ' • ' + reviewsLabel(data.reviews_count) + '</p>'
+      : '';
+
     var html =
       '<div class="product__top">' +
         '<div class="product__col-image">' +
@@ -126,6 +135,7 @@
         '</div>' +
         '<div class="product__col-info">' +
           '<h1 class="product__title">' + title + '</h1>' +
+          (ratingHtml ? ratingHtml : '') +
           (shortDesc ? '<div class="product__short-desc">' + shortDesc + '</div>' : '') +
           specsHtml +
           (actions ? '<div class="product__actions">' + actions + '</div>' : '') +
