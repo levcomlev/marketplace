@@ -4,7 +4,7 @@
 
 (function () {
   const FILTERS = [
-    { value: '', label: 'Все товары' },
+    { value: '', label: 'Каталог' },
     { value: 'inst:guitar', label: 'Гитара' },
     { value: 'inst:piano', label: 'Фортепиано' },
     { value: 'inst:bass', label: 'Бас-гитара' },
@@ -27,15 +27,38 @@
 
   let products = [];
   let activeFilter = '';
+  let filtersOpen = false;
 
   function renderFilters(container) {
-    container.innerHTML = FILTERS.map(function (f) {
-      const val = f.value || 'all';
-      const isActive = val === (activeFilter || 'all') ? ' is-active' : '';
-      return '<button type="button" class="catalog__filter' + isActive + '" data-filter="' + (f.value || 'all') + '">' + escapeHtml(f.label) + '</button>';
-    }).join('');
+    const first = FILTERS[0];
+    const rest = FILTERS.slice(1);
+    const triggerActive = !activeFilter || activeFilter === 'all' ? ' is-active' : '';
+    container.innerHTML =
+      '<button type="button" class="catalog__filter catalog__filter--trigger' + triggerActive + '" data-filter="' + (first.value || 'all') + '" aria-expanded="false">' + escapeHtml(first.label) + '</button>' +
+      '<div class="catalog__filters-list" id="catalog-filters-list" hidden>' +
+      rest.map(function (f) {
+        const val = f.value || 'all';
+        const isActive = val === activeFilter ? ' is-active' : '';
+        return '<button type="button" class="catalog__filter" data-filter="' + (f.value || 'all') + '">' + escapeHtml(f.label) + '</button>';
+      }).join('') +
+      '</div>';
 
-    container.querySelectorAll('.catalog__filter').forEach(function (btn) {
+    const triggerBtn = container.querySelector('.catalog__filter--trigger');
+    const listEl = document.getElementById('catalog-filters-list');
+
+    triggerBtn.addEventListener('click', function () {
+      filtersOpen = !filtersOpen;
+      listEl.hidden = !filtersOpen;
+      triggerBtn.setAttribute('aria-expanded', filtersOpen ? 'true' : 'false');
+      if (filtersOpen) {
+        activeFilter = '';
+        triggerBtn.classList.add('is-active');
+        container.querySelectorAll('.catalog__filter:not(.catalog__filter--trigger)').forEach(function (b) { b.classList.remove('is-active'); });
+        renderGrid(document.getElementById('catalog-grid'), products);
+      }
+    });
+
+    container.querySelectorAll('.catalog__filter:not(.catalog__filter--trigger)').forEach(function (btn) {
       btn.addEventListener('click', function () {
         activeFilter = this.getAttribute('data-filter') === 'all' ? '' : this.getAttribute('data-filter');
         container.querySelectorAll('.catalog__filter').forEach(function (b) { b.classList.remove('is-active'); });

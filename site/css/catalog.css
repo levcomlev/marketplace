@@ -15,8 +15,19 @@
 .catalog__filters {
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
   gap: var(--space-s);
   margin-bottom: var(--space-l);
+}
+
+.catalog__filters-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+}
+
+.catalog__filters-list[hidden] {
+  display: none;
 }
 
 .catalog__filter {
