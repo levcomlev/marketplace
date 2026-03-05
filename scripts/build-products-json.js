@@ -90,7 +90,8 @@ console.log('Written', OUT_PATH, '(' + products.length + ' products)');
 
 if (!fs.existsSync(OUT_PRODUCTS_DIR)) fs.mkdirSync(OUT_PRODUCTS_DIR, { recursive: true });
 index.forEach(function (id) {
-  const p = JSON.parse(fs.readFileSync(path.join(ROOT, 'content/products', id, 'product.json'), 'utf8'));
+  const productDir = path.join(ROOT, 'content/products', id);
+  const p = JSON.parse(fs.readFileSync(path.join(productDir, 'product.json'), 'utf8'));
   const numbered = getNumberedImages(id);
   const images = numbered || (Array.isArray(p.images) && p.images.length > 0 ? p.images : [p.image_main]);
   const image_main = images[0];
@@ -119,6 +120,12 @@ index.forEach(function (id) {
   if (ratingData) {
     full.rating = ratingData.rating;
     full.reviews_count = ratingData.reviews_count;
+  }
+  const reviewsPath = path.join(productDir, 'reviews.json');
+  if (Array.isArray(p.reviews) && p.reviews.length > 0) {
+    full.reviews = p.reviews;
+  } else if (fs.existsSync(reviewsPath)) {
+    full.reviews = JSON.parse(fs.readFileSync(reviewsPath, 'utf8'));
   }
   fs.writeFileSync(path.join(OUT_PRODUCTS_DIR, id + '.json'), JSON.stringify(full, null, 2), 'utf8');
 });

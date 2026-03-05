@@ -1,5 +1,9 @@
 /* Страница товара: галерея, описание, кнопки */
 
+html {
+  scroll-behavior: smooth;
+}
+
 .product-page {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -174,6 +178,28 @@
   margin: 0;
 }
 
+.product__rating-link {
+  display: inline-block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.product__rating-link:hover {
+  opacity: 0.8;
+  color: inherit;
+}
+
+/* плавная прокрутка к якорю отзывов */
+.product-page {
+  scroll-margin-top: 0;
+}
+
+#product-reviews {
+  scroll-margin-top: var(--space-l, 1rem);
+}
+
 .product__short-desc {
   font-size: 0.9375rem;
   line-height: 1.55;
@@ -222,44 +248,82 @@
 
 .product__btn {
   display: inline-block;
-  padding: var(--space-s) var(--space-l);
-  font-size: 1rem;
-  font-weight: 600;
-  border-radius: var(--radius);
+  padding: 6px var(--space-m);
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: var(--radius-btn);
+  background: var(--color-btn-bg);
+  color: var(--color-btn-text);
+  border: none;
   text-decoration: none;
   font-family: var(--font-primary);
   transition: opacity 0.15s;
 }
 
 .product__btn:hover {
-  opacity: 0.9;
+  opacity: 0.85;
   text-decoration: none;
+  color: var(--color-btn-text);
 }
 
-.product__btn--ozon {
-  background: #005bff;
-  color: #fff;
-}
-
-.product__btn--wb {
-  background: #cb11ab;
-  color: #fff;
-}
-
-.product__btn--digital {
-  background: var(--color-accent);
-  color: #fff;
-}
-
+.product__btn--ozon,
+.product__btn--wb,
+.product__btn--digital,
 .product__btn--secondary {
-  background: transparent;
-  border: 1px solid var(--color-border);
-  color: var(--color-text);
+  background: var(--color-btn-bg);
+  color: var(--color-btn-text);
 }
 
 .product__btn--secondary:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  opacity: 0.85;
+  color: var(--color-btn-text);
+}
+
+/* Отзывы */
+.product-reviews {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-xl);
+  border-top: 1px solid var(--color-border);
+}
+
+.product-reviews__title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin: 0 0 var(--space-l) 0;
+}
+
+.product-review {
+  margin-bottom: var(--space-l);
+}
+
+.product-review:last-child {
+  margin-bottom: 0;
+}
+
+.product-review__head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-s);
+  margin: 0 0 var(--space-xs) 0;
+  font-size: 0.9375rem;
+}
+
+.product-review__author {
+  font-weight: 600;
+}
+
+.product-review__stars {
+  color: #eab308;
+  letter-spacing: 0.05em;
+}
+
+.product-review__text {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--color-text-muted);
+  margin: 0;
+  white-space: normal;
 }
 
 /* Рекомендуем также — карусель в одну строку */
@@ -374,29 +438,48 @@ body.has-product-sticky-bar {
   padding: var(--space-s) var(--space-l);
   padding-bottom: calc(var(--space-s) + env(safe-area-inset-bottom, 0));
   display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
   gap: var(--space-s);
 }
 
+.product-sticky-bar__brand {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.product-sticky-bar__brand:hover {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
 .product-sticky-bar__toggle {
-  width: 100%;
-  padding: var(--space-m) var(--space-l);
-  font-size: 1rem;
-  font-weight: 600;
+  width: auto;
+  min-width: 0;
+  max-width: calc(100% / 3);
+  padding: var(--space-s) var(--space-m);
+  font-size: 0.9375rem;
+  font-weight: 500;
   font-family: var(--font-primary);
-  color: #fff;
-  background: var(--color-accent);
+  color: var(--color-btn-text);
+  background: var(--color-btn-bg);
   border: none;
-  border-radius: var(--radius);
+  border-radius: var(--radius-btn);
   cursor: pointer;
+  flex-shrink: 0;
 }
 
 .product-sticky-bar__toggle:hover {
-  opacity: 0.95;
+  opacity: 0.85;
 }
 
 .product-sticky-bar__menu {
+  flex-basis: 100%;
+  width: 100%;
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-s);
@@ -415,40 +498,34 @@ body.has-product-sticky-bar {
 
 .product-sticky-bar__btn {
   display: block;
-  padding: var(--space-s) var(--space-m);
-  font-size: 0.9375rem;
-  font-weight: 600;
+  padding: 6px var(--space-m);
+  font-size: 0.875rem;
+  font-weight: 500;
   font-family: var(--font-primary);
   text-align: center;
   text-decoration: none;
-  border-radius: var(--radius);
+  border-radius: var(--radius-btn);
+  background: var(--color-btn-bg);
+  color: var(--color-btn-text);
   border: none;
   cursor: pointer;
   transition: opacity 0.15s;
 }
 
 .product-sticky-bar__btn:hover {
-  opacity: 0.9;
+  opacity: 0.85;
   text-decoration: none;
+  color: var(--color-btn-text);
 }
 
-.product-sticky-bar__btn--ozon {
-  background: #005bff;
-  color: #fff;
-}
-
-.product-sticky-bar__btn--wb {
-  background: #cb11ab;
-  color: #fff;
-}
-
+.product-sticky-bar__btn--ozon,
+.product-sticky-bar__btn--wb,
 .product-sticky-bar__btn--digital {
-  background: transparent;
-  color: var(--color-text);
-  border: 1px solid var(--color-border);
+  background: var(--color-btn-bg);
+  color: var(--color-btn-text);
 }
 
 .product-sticky-bar__btn--digital:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  opacity: 0.85;
+  color: var(--color-btn-text);
 }

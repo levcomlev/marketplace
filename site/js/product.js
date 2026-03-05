@@ -124,13 +124,42 @@
       if (n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20)) return n + ' отзыва';
       return n + ' отзывов';
     }
-    var ratingHtml = (data.rating != null && data.reviews_count != null)
-      ? '<p class="product__rating">⭐ ' + escapeHtml(String(data.rating)) + ' • ' + reviewsLabel(data.reviews_count) + '</p>'
-      : '';
+    var hasReviewsBlock = !!(data.reviews && data.reviews.length > 0);
+    var reviewsCount = hasReviewsBlock ? data.reviews.length : (data.reviews_count != null ? data.reviews_count : 0);
+    var ratingHtml = '';
+    if (data.rating != null && data.reviews_count != null) {
+      var ratingText = '⭐ ' + escapeHtml(String(data.rating)) + ' • ' + reviewsLabel(data.reviews_count);
+      ratingHtml = hasReviewsBlock
+        ? '<a href="#product-reviews" class="product__rating product__rating-link">' + ratingText + '</a>'
+        : '<p class="product__rating">' + ratingText + '</p>';
+    } else if (hasReviewsBlock && reviewsCount > 0) {
+      ratingHtml = '<a href="#product-reviews" class="product__rating product__rating-link">⭐ ' + reviewsLabel(reviewsCount) + '</a>';
+    }
 
     var ratingRowHtml = (ratingHtml || actions)
       ? '<div class="product__rating-row">' + (ratingHtml || '') + (actions ? '<div class="product__actions">' + actions + '</div>' : '') + '</div>'
       : '';
+
+    var reviewsHtml = '';
+    if (data.reviews && data.reviews.length > 0) {
+      reviewsHtml =
+        '<section id="product-reviews" class="product-reviews" aria-label="Отзывы">' +
+        '<h2 class="product-reviews__title">Отзывы</h2>' +
+        data.reviews.map(function (r) {
+          var author = escapeHtml(r.author);
+          var text = escapeHtml(r.text || '').replace(/\n/g, '<br>');
+          return (
+            '<div class="product-review">' +
+            '<p class="product-review__head">' +
+            '<span class="product-review__author">' + author + '</span> ' +
+            '<span class="product-review__stars" aria-hidden="true">★★★★★</span>' +
+            '</p>' +
+            '<div class="product-review__text">' + text + '</div>' +
+            '</div>'
+          );
+        }).join('') +
+        '</section>';
+    }
 
     var html =
       '<div class="product__top">' +
@@ -143,7 +172,8 @@
           (shortDesc ? '<div class="product__short-desc">' + shortDesc + '</div>' : '') +
           specsHtml +
         '</div>' +
-      '</div>';
+      '</div>' +
+      reviewsHtml;
 
     document.getElementById('product-root').innerHTML = html;
     bindGallery(images);
@@ -162,6 +192,7 @@
       if (data.link_wb) menuParts.push('<a class="product-sticky-bar__btn product-sticky-bar__btn--wb" href="' + escapeHtml(data.link_wb) + '" target="_blank" rel="noopener noreferrer">Купить на Wildberries</a>');
       if (hasDigital) menuParts.push('<span class="product-sticky-bar__btn product-sticky-bar__btn--digital">Цифровая версия — ' + data.digital_price + ' ₽</span>');
       bar.innerHTML =
+        '<a href="index.html" class="product-sticky-bar__brand">komlew.posters</a>' +
         '<button type="button" class="product-sticky-bar__toggle" id="product-sticky-bar-toggle" aria-expanded="false">Купить</button>' +
         '<div class="product-sticky-bar__menu" id="product-sticky-bar-menu">' + menuParts.join('') + '</div>';
       document.body.appendChild(bar);

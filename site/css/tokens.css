@@ -23,4 +23,7 @@
   --card-width: 224px;
   --card-radius: 14px;
   --radius: 8px;
+  --radius-btn: 14px;
+  --color-btn-bg: #000000;
+  --color-btn-text: #ffffff;
 }
