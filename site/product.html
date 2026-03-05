@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Товар — Komlew.posters</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/product.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="site-header__brand" href="index.html">
+        <span class="site-header__brand-name">Komlew.posters</span>
+        <span class="site-header__tagline">Обучающие плакаты и карточки</span>
+      </a>
+    </div>
+  </header>
+
+  <main class="product-page">
+    <p class="product-page__back"><a href="index.html">← В каталог</a></p>
+    <div id="product-root"></div>
+    <div id="product-error" class="product-error" hidden>
+      <p>Товар не найден.</p>
+      <p><a href="index.html">Вернуться в каталог</a></p>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="site-footer__inner">
+      <section class="site-footer__section">
+        <h2 class="site-footer__title">Контакты</h2>
+        <div class="site-footer__contacts">
+          <a href="mailto:levcomlev@gmail.com">levcomlev@gmail.com</a>
+          <a href="https://t.me/lewkomlew" target="_blank" rel="noopener noreferrer">Telegram</a>
+        </div>
+      </section>
+      <section class="site-footer__section">
+        <h2 class="site-footer__title">Где купить</h2>
+        <div class="site-footer__links">
+          <a href="https://www.ozon.ru/seller/poleznye-plakaty-komlew-posters/" target="_blank" rel="noopener noreferrer">Ozon</a>
+          <a href="https://www.wildberries.ru/seller/4358868" target="_blank" rel="noopener noreferrer">Wildberries</a>
+        </div>
+      </section>
+    </div>
+  </footer>
+  <script src="js/product.js"></script>
+</body>
+</html>
