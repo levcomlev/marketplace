@@ -1,14 +1,17 @@
 {
   "id": "example",
   "title": "Название плаката",
-  "description_short": "Краткое описание для карточки в каталоге.",
-  "description_full": "Полное описание для страницы товара. Можно в несколько абзацев.",
   "image_main": "images/products/example/main.jpg",
   "image_thumb": "images/products/example/thumb.jpg",
   "category": "категория",
-  "has_digital": true,
-  "digital_price": 299,
-  "digital_format": "PDF",
-  "link_ozon": "https://www.ozon.ru/...",
-  "link_wb": "https://www.wildberries.ru/..."
+  "type": "Обучающий плакат",
+  "subject": "Музыка",
+  "format": "A1",
+  "country": "Россия",
+  "material": "Бумага",
+  "has_digital": false,
+  "digital_price": null,
+  "digital_format": null,
+  "link_ozon": "",
+  "link_wb": ""
 }
