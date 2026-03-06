@@ -30,8 +30,18 @@
   display: none;
 }
 
+/* Десктоп (768px и шире, в т.ч. MacBook): список категорий всегда виден, «Каталог» только сбрасывает фильтр */
+@media (min-width: 768px) {
+  .catalog__filters-list[hidden],
+  .catalog__filters-list {
+    display: flex !important;
+    flex-wrap: wrap;
+    gap: var(--space-s);
+  }
+}
+
 /* Узкий экран: «Каталог» слева, категории справа от неё в одну строку с прокруткой */
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .catalog__filters {
     flex-wrap: nowrap;
     flex-direction: row;
@@ -130,7 +140,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   .catalog {
     padding-left: 6px;
     padding-right: 6px;
