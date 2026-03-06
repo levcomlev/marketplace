@@ -128,12 +128,12 @@
     var reviewsCount = hasReviewsBlock ? data.reviews.length : (data.reviews_count != null ? data.reviews_count : 0);
     var ratingHtml = '';
     if (data.rating != null && data.reviews_count != null) {
-      var ratingText = '⭐ ' + escapeHtml(String(data.rating)) + ' • ' + reviewsLabel(data.reviews_count);
+      var ratingText = '<span class="product__rating-star">★</span> ' + escapeHtml(String(data.rating)) + ' • ' + reviewsLabel(data.reviews_count);
       ratingHtml = hasReviewsBlock
         ? '<a href="#product-reviews" class="product__rating product__rating-link">' + ratingText + '</a>'
         : '<p class="product__rating">' + ratingText + '</p>';
     } else if (hasReviewsBlock && reviewsCount > 0) {
-      ratingHtml = '<a href="#product-reviews" class="product__rating product__rating-link">⭐ ' + reviewsLabel(reviewsCount) + '</a>';
+      ratingHtml = '<a href="#product-reviews" class="product__rating product__rating-link"><span class="product__rating-star">★</span> ' + reviewsLabel(reviewsCount) + '</a>';
     }
 
     var priceHtml = '';

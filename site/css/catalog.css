@@ -228,6 +228,10 @@
   margin: 0 0 var(--space-xs) 0;
 }
 
+.product-card__rating-star {
+  color: #eab308;
+}
+
 .product-card__actions {
   display: flex;
   flex-wrap: wrap;

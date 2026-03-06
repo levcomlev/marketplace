@@ -91,7 +91,7 @@
       : '';
 
     const ratingHtml = (p.rating != null && p.reviews_count != null)
-      ? '<p class="product-card__rating">⭐ ' + escapeHtml(String(p.rating)) + ' • ' + reviewsLabel(p.reviews_count) + '</p>'
+      ? '<p class="product-card__rating"><span class="product-card__rating-star">★</span> ' + escapeHtml(String(p.rating)) + ' • ' + reviewsLabel(p.reviews_count) + '</p>'
       : '';
 
     const titleLink = 'product.html?id=' + encodeURIComponent(p.id);

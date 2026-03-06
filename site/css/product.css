@@ -253,6 +253,10 @@ html {
   margin: 0;
 }
 
+.product__rating-star {
+  color: #eab308;
+}
+
 .product__rating-link {
   display: inline-block;
   text-decoration: none;
