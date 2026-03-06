@@ -13,6 +13,12 @@
   <link rel="stylesheet" href="css/product.css">
 </head>
 <body>
+  <a href="index.html" class="product-back-fixed" aria-label="В каталог" title="В каталог">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+  </a>
+  <script>
+    (function(){ if (window.matchMedia('(min-width: 769px)').matches) { var el = document.querySelector('.product-back-fixed'); if (el) el.remove(); } })();
+  </script>
   <main class="product-page">
     <p class="product-page__back"><a href="index.html">← В каталог</a></p>
     <div id="product-root"></div>

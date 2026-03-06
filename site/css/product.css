@@ -10,6 +10,70 @@ html {
   padding: var(--space-l);
 }
 
+/* Мобильная: меньше верхний отступ — блок с изображением выше, без белой полосы */
+@media (max-width: 768px) {
+  .product-page {
+    padding-top: var(--space-s);
+  }
+}
+
+/* Кнопка «назад» объёмная, полупрозрачная — только на мобильной, в левом верхнем углу, видна при прокрутке */
+.product-back-fixed {
+  display: none;
+  position: fixed;
+  top: calc(var(--space-s) + env(safe-area-inset-top, 0));
+  left: calc(var(--space-s) + env(safe-area-inset-left, 0));
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--color-text);
+  text-decoration: none;
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.15),
+    0 6px 20px rgba(0, 0, 0, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+@media (max-width: 768px) {
+  .product-back-fixed {
+    display: flex;
+  }
+}
+
+@media (min-width: 769px) {
+  .product-back-fixed {
+    display: none !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    left: -9999px !important;
+    width: 0 !important;
+    height: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+  }
+}
+
+.product-back-fixed:hover {
+  opacity: 0.95;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.product-back-fixed:active {
+  transform: scale(0.96);
+}
+
+.product-back-fixed svg {
+  display: block;
+}
+
 .product-page__back {
   margin: 0 0 var(--space-m) 0;
 }
@@ -17,6 +81,17 @@ html {
 .product-page__back a {
   color: var(--color-text-muted);
   font-size: 0.9375rem;
+  text-decoration: none;
+}
+
+.product-page__back a:hover {
+  color: var(--color-accent);
+}
+
+@media (max-width: 768px) {
+  .product-page__back {
+    display: none;
+  }
 }
 
 .product-error {
@@ -498,7 +573,7 @@ body.has-product-sticky-bar {
   flex-basis: 100%;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: var(--space-s);
   max-height: 0;
   overflow: hidden;

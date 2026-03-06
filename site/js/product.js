@@ -195,8 +195,8 @@
       bar.id = 'product-sticky-bar';
       bar.className = 'product-sticky-bar';
       var menuParts = [];
-      if (data.link_ozon) menuParts.push('<a class="product-sticky-bar__btn product-sticky-bar__btn--ozon" href="' + escapeHtml(data.link_ozon) + '" target="_blank" rel="noopener noreferrer">Купить на Ozon</a>');
-      if (data.link_wb) menuParts.push('<a class="product-sticky-bar__btn product-sticky-bar__btn--wb" href="' + escapeHtml(data.link_wb) + '" target="_blank" rel="noopener noreferrer">Купить на Wildberries</a>');
+      if (data.link_ozon) menuParts.push('<a class="product-sticky-bar__btn product-sticky-bar__btn--ozon" href="' + escapeHtml(data.link_ozon) + '" target="_blank" rel="noopener noreferrer">Ozon</a>');
+      if (data.link_wb) menuParts.push('<a class="product-sticky-bar__btn product-sticky-bar__btn--wb" href="' + escapeHtml(data.link_wb) + '" target="_blank" rel="noopener noreferrer">Wildberries</a>');
       if (hasDigital) menuParts.push('<span class="product-sticky-bar__btn product-sticky-bar__btn--digital">Цифровая версия — ' + data.digital_price + ' ₽</span>');
       bar.innerHTML =
         '<a href="index.html" class="product-sticky-bar__brand">komlew.posters</a>' +
