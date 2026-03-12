@@ -213,6 +213,12 @@ html {
   opacity: 1;
 }
 
+@media (max-width: 768px) {
+  .product-gallery__zone {
+    display: none;
+  }
+}
+
 .product-gallery__dots {
   display: flex;
   justify-content: center;
@@ -233,6 +239,130 @@ html {
 
 .product-gallery__dot.is-active {
   background: var(--color-accent);
+}
+
+/* Оверлей: увеличение / полноэкран по клику на фото */
+.product-gallery-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.92);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.product-gallery-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.product-gallery-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+}
+
+.product-gallery-overlay__close {
+  position: absolute;
+  top: var(--space-m);
+  right: var(--space-m);
+  z-index: 2;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.product-gallery-overlay__close:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.product-gallery-overlay__close svg {
+  display: block;
+}
+
+.product-gallery-overlay__img {
+  position: relative;
+  z-index: 1;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+/* Мобильные: изображение во весь экран (оверлей на весь viewport) */
+@media (max-width: 768px) {
+  .product-gallery-overlay__img {
+    max-width: 100vw;
+    max-height: 100vh;
+  }
+}
+
+/* Десктоп: увеличенное изображение в центре */
+@media (min-width: 769px) {
+  .product-gallery-overlay__img {
+    max-width: 90vw;
+    max-height: 90vh;
+  }
+}
+
+.product-gallery-overlay__arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.product-gallery-overlay__arrow:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.product-gallery-overlay__arrow svg {
+  display: block;
+}
+
+.product-gallery-overlay__arrow--prev {
+  left: var(--space-m);
+}
+
+.product-gallery-overlay__arrow--next {
+  right: var(--space-m);
+}
+
+@media (max-width: 768px) {
+  .product-gallery-overlay__arrow {
+    display: none !important;
+  }
+}
+
+body.product-gallery-overlay-open {
+  overflow: hidden;
 }
 
 /* Контент */

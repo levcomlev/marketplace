@@ -92,6 +92,145 @@
     }, { passive: true });
   }
 
+  function bindImageOpen(images, productTitle) {
+    if (!images || images.length === 0) return;
+    var imgEl = document.getElementById('product-gallery-img');
+    var innerEl = document.getElementById('product-gallery-inner');
+    if (!imgEl || !innerEl) return;
+
+    var overlay = document.getElementById('product-gallery-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.id = 'product-gallery-overlay';
+      overlay.className = 'product-gallery-overlay';
+      overlay.setAttribute('role', 'dialog');
+      overlay.setAttribute('aria-modal', 'true');
+      overlay.setAttribute('aria-label', 'Увеличенное фото');
+      overlay.innerHTML =
+        '<div class="product-gallery-overlay__backdrop"></div>' +
+        '<button type="button" class="product-gallery-overlay__close" aria-label="Закрыть"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>' +
+        '<img class="product-gallery-overlay__img" src="" alt="">' +
+        (images.length > 1
+          ? '<button type="button" class="product-gallery-overlay__arrow product-gallery-overlay__arrow--prev" aria-label="Предыдущее фото"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>' +
+            '<button type="button" class="product-gallery-overlay__arrow product-gallery-overlay__arrow--next" aria-label="Следующее фото"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>'
+          : '');
+      document.body.appendChild(overlay);
+    }
+
+    var overlayImg = overlay.querySelector('.product-gallery-overlay__img');
+    var backdrop = overlay.querySelector('.product-gallery-overlay__backdrop');
+    var closeBtn = overlay.querySelector('.product-gallery-overlay__close');
+    var prevBtn = overlay.querySelector('.product-gallery-overlay__arrow--prev');
+    var nextBtn = overlay.querySelector('.product-gallery-overlay__arrow--next');
+
+    var isMobile = window.matchMedia('(max-width: 768px)').matches;
+    var overlayIndex = 0;
+
+    function openOverlay() {
+      var currentSrc = imgEl.src || '';
+      overlayIndex = images.indexOf(currentSrc);
+      if (overlayIndex < 0) {
+        for (var i = 0; i < images.length; i++) {
+          if (currentSrc === images[i] || currentSrc.indexOf(images[i]) !== -1 || (currentSrc.split('?')[0].endsWith && currentSrc.split('?')[0].endsWith(images[i]))) {
+            overlayIndex = i;
+            break;
+          }
+        }
+        if (overlayIndex < 0) overlayIndex = 0;
+      }
+      overlay._images = images;
+      overlay._index = overlayIndex;
+      overlayImg.src = images[overlayIndex];
+      overlayImg.alt = productTitle || '';
+      overlay.classList.add('is-open');
+      document.body.classList.add('product-gallery-overlay-open');
+      if (isMobile && overlay.requestFullscreen) {
+        overlay.requestFullscreen().catch(function () {});
+      }
+      if (prevBtn) prevBtn.style.display = overlayIndex > 0 ? '' : 'none';
+      if (nextBtn) nextBtn.style.display = overlayIndex < images.length - 1 ? '' : 'none';
+    }
+
+    function closeOverlay() {
+      if (overlay._images && overlay._index != null) {
+        var galleryImg = document.getElementById('product-gallery-img');
+        if (galleryImg) galleryImg.src = overlay._images[overlay._index];
+        var dotsEl = document.getElementById('product-gallery-dots');
+        if (dotsEl) dotsEl.querySelectorAll('.product-gallery__dot').forEach(function (d, i) {
+          d.classList.toggle('is-active', i === overlay._index);
+        });
+      }
+      overlay.classList.remove('is-open');
+      document.body.classList.remove('product-gallery-overlay-open');
+      if (document.fullscreenElement === overlay && document.exitFullscreen) {
+        document.exitFullscreen().catch(function () {});
+      }
+    }
+
+    function showOverlayIndex(idx) {
+      overlayIndex = (idx + images.length) % images.length;
+      overlay._index = overlayIndex;
+      overlayImg.src = images[overlayIndex];
+      if (prevBtn) prevBtn.style.display = overlayIndex > 0 ? '' : 'none';
+      if (nextBtn) nextBtn.style.display = overlayIndex < images.length - 1 ? '' : 'none';
+    }
+
+    innerEl.addEventListener('click', function (e) {
+      if (e.target.closest('[data-action]')) return;
+      openOverlay();
+    });
+
+    if (backdrop) backdrop.addEventListener('click', closeOverlay);
+    if (closeBtn) closeBtn.addEventListener('click', closeOverlay);
+    if (prevBtn) prevBtn.addEventListener('click', function (e) { e.stopPropagation(); showOverlayIndex(overlayIndex - 1); });
+    if (nextBtn) nextBtn.addEventListener('click', function (e) { e.stopPropagation(); showOverlayIndex(overlayIndex + 1); });
+
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) closeOverlay();
+    });
+
+    overlay._close = closeOverlay;
+    overlay._showIndex = showOverlayIndex;
+
+    if (!overlay._swipeBound) {
+      overlay._swipeBound = true;
+      var touchStartX = 0;
+      var touchStartY = 0;
+      overlay.addEventListener('touchstart', function (e) {
+        if (e.touches && e.touches[0]) {
+          touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
+        }
+      }, { passive: true });
+      overlay.addEventListener('touchend', function (e) {
+        if (!e.changedTouches || !e.changedTouches[0]) return;
+        var touchEndX = e.changedTouches[0].clientX;
+        var touchEndY = e.changedTouches[0].clientY;
+        var diffX = touchStartX - touchEndX;
+        var diffY = touchEndY - touchStartY;
+        if (Math.abs(diffY) > Math.abs(diffX) && diffY > 50) {
+          overlay._close();
+          return;
+        }
+        if (overlay._images && overlay._images.length >= 2 && Math.abs(diffX) > 50) {
+          if (diffX > 0) overlay._showIndex(overlay._index + 1);
+          else overlay._showIndex(overlay._index - 1);
+        }
+      }, { passive: true });
+    }
+
+    if (!overlay._keydownBound) {
+      overlay._keydownBound = true;
+      document.addEventListener('keydown', function (e) {
+        var o = document.getElementById('product-gallery-overlay');
+        if (!o || !o.classList.contains('is-open')) return;
+        if (e.key === 'Escape') { o._close(); return; }
+        if (o._images && o._images.length > 1 && e.key === 'ArrowLeft') { o._showIndex(o._index - 1); return; }
+        if (o._images && o._images.length > 1 && e.key === 'ArrowRight') { o._showIndex(o._index + 1); return; }
+      });
+    }
+  }
+
   function renderProduct(data) {
     var images = data.images && data.images.length ? data.images : [data.image_main];
     var title = escapeHtml(data.title);
@@ -184,6 +323,7 @@
 
     document.getElementById('product-root').innerHTML = html;
     bindGallery(images);
+    bindImageOpen(images, data.title);
 
     var hasOzon = !!data.link_ozon;
     var hasWb = !!data.link_wb;
