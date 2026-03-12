@@ -181,11 +181,13 @@
       }
 
       let touchStartX = 0;
+      let touchStartY = 0;
       let didSwipe = false;
 
       link.addEventListener('touchstart', function (e) {
         if (e.touches && e.touches[0]) {
           touchStartX = e.touches[0].clientX;
+          touchStartY = e.touches[0].clientY;
           didSwipe = false;
         }
       }, { passive: true });
@@ -193,8 +195,12 @@
       link.addEventListener('touchmove', function (e) {
         if (!e.touches || !e.touches[0] || n <= 1) return;
         const currentX = e.touches[0].clientX;
+        const currentY = e.touches[0].clientY;
         const diffX = currentX - touchStartX;
-        if (Math.abs(diffX) > 10) {
+        const diffY = currentY - touchStartY;
+        const absX = Math.abs(diffX);
+        const absY = Math.abs(diffY);
+        if (absX > absY && absX > 25) {
           didSwipe = true;
           e.preventDefault();
           const w = getWidth();

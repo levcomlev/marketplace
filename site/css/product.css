@@ -150,6 +150,13 @@ html {
   aspect-ratio: 3 / 4;
 }
 
+@media (min-width: 769px) {
+  .product-gallery__stage {
+    max-height: calc(100vh - 140px);
+    max-width: min(504px, calc((100vh - 140px) * 3 / 4));
+  }
+}
+
 .product-gallery__stage-inner {
   position: relative;
   width: 100%;

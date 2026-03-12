@@ -88,9 +88,19 @@
     strip.style.transition = 'none';
     setStripTransform(-current * w);
 
+    function syncCurrentFromDots() {
+      if (!dotsEl) return;
+      var activeDot = dotsEl.querySelector('.product-gallery__dot.is-active');
+      if (activeDot) {
+        var idx = parseInt(activeDot.getAttribute('data-index'), 10);
+        if (!isNaN(idx)) current = idx;
+      }
+    }
+
     innerEl.addEventListener('click', function (e) {
       var zone = e.target.closest('[data-action]');
       if (!zone) return;
+      syncCurrentFromDots();
       if (zone.getAttribute('data-action') === 'prev') go(-1);
       else go(1);
     });
@@ -104,6 +114,7 @@
 
     var touchStartX = 0;
     innerEl.addEventListener('touchstart', function (e) {
+      syncCurrentFromDots();
       if (e.touches && e.touches[0]) touchStartX = e.touches[0].clientX;
     }, { passive: true });
     innerEl.addEventListener('touchmove', function (e) {
