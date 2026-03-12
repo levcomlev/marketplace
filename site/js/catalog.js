@@ -168,10 +168,14 @@
       const strip = link.querySelector('.product-card__gallery-strip');
       const dotsEl = wrap ? wrap.querySelector('.product-card__gallery-dots') : null;
       if (!viewport || !strip) return;
-      let current = 0;
-      const n = parseInt(strip.style.getPropertyValue('--card-gallery-n'), 10) || 1;
-      if (n <= 1) return;
 
+      function getN() { return strip.children.length || 1; }
+      function getCurrent() {
+        if (!dotsEl) return 0;
+        const dots = dotsEl.querySelectorAll('.product-card__gallery-dot');
+        for (let i = 0; i < dots.length; i++) if (dots[i].classList.contains('is-active')) return i;
+        return 0;
+      }
       function getWidth() { return viewport.offsetWidth || 0; }
       function setTransform(px) { strip.style.transform = 'translateX(' + px + 'px)'; }
       function setDotsActive(index) {
@@ -179,6 +183,9 @@
         const dots = dotsEl.querySelectorAll('.product-card__gallery-dot');
         dots.forEach(function (dot, i) { dot.classList.toggle('is-active', i === index); });
       }
+      let n = getN();
+      if (n <= 1) return;
+      let current = getCurrent();
 
       let touchStartX = 0;
       let touchStartY = 0;
@@ -193,6 +200,8 @@
       }, { passive: true });
 
       link.addEventListener('touchmove', function (e) {
+        n = getN();
+        current = getCurrent();
         if (!e.touches || !e.touches[0] || n <= 1) return;
         const currentX = e.touches[0].clientX;
         const currentY = e.touches[0].clientY;
@@ -215,6 +224,8 @@
       }, { passive: false });
 
       link.addEventListener('touchend', function (e) {
+        n = getN();
+        current = getCurrent();
         if (!e.changedTouches || !e.changedTouches[0]) return;
         const touchEndX = e.changedTouches[0].clientX;
         const diff = touchStartX - touchEndX;

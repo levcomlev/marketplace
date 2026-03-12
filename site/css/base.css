@@ -13,8 +13,7 @@ body {
   font-size: 16px;
   line-height: 1.5;
   color: var(--color-text);
-  background: linear-gradient(to bottom, #E4E4E6, #E6E6E8, #E9E9EC);
-  background-attachment: fixed;
+  background: #fff;
 }
 
 a {

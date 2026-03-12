@@ -224,11 +224,11 @@
       for (var i = 0; i < images.length; i++) {
         var slide = document.createElement('div');
         slide.className = 'product-gallery-overlay__slide';
-        var img = document.createElement('img');
-        img.className = 'product-gallery-overlay__img';
-        img.src = images[i];
-        img.alt = productTitle || '';
-        slide.appendChild(img);
+        var imgEl2 = document.createElement('img');
+        imgEl2.className = 'product-gallery-overlay__img';
+        imgEl2.src = images[i];
+        imgEl2.alt = productTitle || '';
+        slide.appendChild(imgEl2);
         strip.appendChild(slide);
       }
       overlay.classList.add('is-open');
