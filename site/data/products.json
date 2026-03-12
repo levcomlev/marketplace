@@ -2,7 +2,7 @@
   {
     "id": "ukulele_card",
     "title": "Аккорды для укулеле - обучающие карточки A4, таблица аккордов, гриф, гаммы, теория музыки, самоучитель",
-    "image_thumb": "images/products/ukulele_card/thumb.jpg",
+    "image_thumb": "images/products/ukulele_card/1.png",
     "category": "Музыка",
     "link_ozon": "https://www.ozon.ru/product/akkordy-dlya-ukulele-obuchayushchie-kartochki-a4-tablitsa-akkordov-grif-gammy-teoriya-3009258302/",
     "link_wb": "https://www.wildberries.ru/catalog/555037163/detail.aspx",
@@ -16,7 +16,7 @@
   {
     "id": "bass_card",
     "title": "Карточки по бас гитаре A4 - обучающий набор, ноты на грифе, гаммы, теория музыки, справочник басиста",
-    "image_thumb": "images/products/bass_card/thumb.jpg",
+    "image_thumb": "images/products/bass_card/1.png",
     "category": "Музыка",
     "link_ozon": "https://www.ozon.ru/product/kartochki-po-bas-gitare-a4-obuchayushchiy-nabor-noty-na-grife-gammy-teoriya-muzyki-3009258303/",
     "link_wb": "https://www.wildberries.ru/catalog/555037164/detail.aspx",
@@ -30,7 +30,7 @@
   {
     "id": "progression_accord",
     "title": "Аккордовые последовательности для фортепиано - обучающий плакат A1, прогрессии аккордов, гармония, 12 тональностей",
-    "image_thumb": "images/products/progression_accord/thumb.jpg",
+    "image_thumb": "images/products/progression_accord/1.png",
     "category": "Музыка",
     "link_ozon": "https://www.ozon.ru/product/akkordovye-posledovatelnosti-dlya-fortepiano-obuchayushchiy-plakat-a1-progressii-akkordov-garmoniya-3009258308/",
     "link_wb": "https://www.wildberries.ru/catalog/326521976/detail.aspx",
@@ -44,7 +44,7 @@
   {
     "id": "guitar",
     "title": "Аккорды для гитары - обучающий плакат A1, таблица аккордов, ноты на грифе, гаммы, музыкальная теория",
-    "image_thumb": "images/products/guitar/thumb.jpg",
+    "image_thumb": "images/products/guitar/1.png",
     "category": "Музыка",
     "link_ozon": "https://www.ozon.ru/product/akkordy-dlya-gitary-obuchayushchiy-plakat-a1-tablitsa-akkordov-noty-na-grife-gammy-3009258304/",
     "link_wb": "https://www.wildberries.ru/catalog/326490063/detail.aspx",
@@ -58,7 +58,7 @@
   {
     "id": "bass",
     "title": "Плакат по бас гитаре A1 - ноты на грифе, гаммы, теория музыки, схема грифа, справочник басиста",
-    "image_thumb": "images/products/bass/thumb.jpg",
+    "image_thumb": "images/products/bass/1.png",
     "category": "Музыка",
     "link_ozon": "https://www.ozon.ru/product/plakat-po-bas-gitare-a1-noty-na-grife-gammy-teoriya-muzyki-shema-grifa-spravochnik-basista-3009258310/",
     "link_wb": "https://www.wildberries.ru/catalog/326505337/detail.aspx?targetUrl=GP",
@@ -72,7 +72,7 @@
   {
     "id": "drum",
     "title": "Плакат по барабанам A1 - обучающий постер, рудименты, ритмы, ноты ударной установки, техника барабанщика",
-    "image_thumb": "images/products/drum/thumb.jpg",
+    "image_thumb": "images/products/drum/1.png",
     "category": "Музыка",
     "link_ozon": "https://www.ozon.ru/product/plakat-po-barabanam-a1-obuchayushchiy-poster-rudimenty-ritmy-noty-udarnoy-ustanovki-3009258306/",
     "link_wb": "https://www.wildberries.ru/catalog/548766852/detail.aspx",
@@ -86,7 +86,7 @@
   {
     "id": "ukulele",
     "title": "Аккорды для укулеле - обучающий плакат A1, таблица аккордов, гриф, гаммы, теория музыки, самоучитель",
-    "image_thumb": "images/products/ukulele/thumb.jpg",
+    "image_thumb": "images/products/ukulele/1.png",
     "category": "Музыка",
     "link_ozon": "https://www.ozon.ru/product/akkordy-dlya-ukulele-obuchayushchiy-plakat-a1-tablitsa-akkordov-grif-gammy-teoriya-3009258305/",
     "link_wb": "https://www.wildberries.ru/catalog/548771041/detail.aspx?targetUrl=GP",
@@ -114,7 +114,7 @@
   {
     "id": "krug",
     "title": "Кварто-квинтовый круг, квинтовый круг",
-    "image_thumb": "images/products/krug/thumb.jpg",
+    "image_thumb": "images/products/krug/1.png",
     "category": "Музыка",
     "link_ozon": "https://www.ozon.ru/product/kvarto-kvintovyy-krug-kvintovyy-krug-3009258307/",
     "link_wb": "https://www.wildberries.ru/catalog/430132032/detail.aspx",
@@ -128,7 +128,7 @@
   {
     "id": "piano",
     "title": "Аккорды и гаммы для фортепиано - обучающий плакат A1, теория музыки, таблица аккордов, справочник пианиста",
-    "image_thumb": "images/products/piano/thumb.jpg",
+    "image_thumb": "images/products/piano/1.png",
     "category": "Музыка",
     "link_ozon": "https://www.ozon.ru/product/akkordy-i-gammy-dlya-fortepiano-obuchayushchiy-plakat-a1-teoriya-muzyki-tablitsa-akkordov-3018108907/",
     "link_wb": "https://www.wildberries.ru/catalog/326443858/detail.aspx",
@@ -142,7 +142,7 @@
   {
     "id": "guitar_card",
     "title": "Аккорды для гитары - обучающие карточки A4, таблица аккордов, ноты на грифе, гаммы, музыкальная теория",
-    "image_thumb": "images/products/guitar_card/thumb.jpg",
+    "image_thumb": "images/products/guitar_card/1.png",
     "category": "Музыка",
     "link_ozon": "https://www.ozon.ru/product/akkordy-dlya-gitary-obuchayushchie-kartochki-a4-tablitsa-akkordov-noty-na-grife-gammy-3018108841/",
     "link_wb": "https://www.wildberries.ru/catalog/504910648/detail.aspx",
@@ -156,7 +156,7 @@
   {
     "id": "discipline",
     "title": "Трекер привычек, дисциплины, 3 плаката",
-    "image_thumb": "images/products/discipline/thumb.jpg",
+    "image_thumb": "images/products/discipline/1.png",
     "category": "Планинг",
     "link_ozon": "https://www.ozon.ru/product/planing-nedatirovannyy-a4-listov-3-3074451075/",
     "link_wb": "https://www.wildberries.ru/catalog/342891324/detail.aspx",
@@ -170,7 +170,7 @@
   {
     "id": "yoga",
     "title": "Плакат йога A1 - асаны йоги, таблица асан, позы йоги, обучающий плакат йога для начинающих",
-    "image_thumb": "images/products/yoga/thumb.jpg",
+    "image_thumb": "images/products/yoga/1.png",
     "category": "Йога",
     "link_ozon": "https://www.ozon.ru/product/plakat-yoga-a1-asany-yogi-tablitsa-asan-pozy-yogi-obuchayushchiy-plakat-yoga-dlya-nachinayushchih-3168945277/",
     "link_wb": "https://www.wildberries.ru/catalog/670788492/detail.aspx",
@@ -184,7 +184,7 @@
   {
     "id": "yoga_cards",
     "title": "Карточки по йоге A4 - обучающие карточки асан и 7 чакр, йога для начинающих, справочник для практики",
-    "image_thumb": "images/products/yoga_cards/thumb.jpg",
+    "image_thumb": "images/products/yoga_cards/1.png",
     "category": "Йога",
     "link_ozon": "https://www.ozon.ru/product/kartochki-po-yoge-a4-obuchayushchie-kartochki-asan-i-7-chakr-yoga-dlya-nachinayushchih-spravochnik-3192089080/",
     "link_wb": "https://www.wildberries.ru/catalog/682816868/detail.aspx?targetUrl=GP",
@@ -198,7 +198,7 @@
   {
     "id": "drum_cards",
     "title": "Карточки по барабанам A4 - обучающий набор, рудименты, ритмы, ноты ударной установки, школа барабанщика",
-    "image_thumb": "images/products/drum_cards/thumb.jpg",
+    "image_thumb": "images/products/drum_cards/1.png",
     "category": "Музыка",
     "link_ozon": "https://www.ozon.ru/product/kartochki-po-barabanam-a4-obuchayushchiy-nabor-rudimenty-ritmy-noty-udarnoy-ustanovki-3196981739/",
     "link_wb": "https://www.wildberries.ru/catalog/685819293/detail.aspx",
@@ -212,7 +212,7 @@
   {
     "id": "kids",
     "title": "Развивающие плакаты для детей А3 - набор обучающих плакатов для детской комнаты, подготовка к школе, алфавит, числа, эмоции",
-    "image_thumb": "images/products/kids/thumb.jpg",
+    "image_thumb": "images/products/kids/1.png",
     "category": "Дети",
     "link_ozon": "https://www.ozon.ru/product/razvivayushchie-plakaty-dlya-detey-a3-nabor-obuchayushchih-plakatov-dlya-detskoy-komnaty-3493400298/",
     "link_wb": "https://www.wildberries.ru/catalog/801755271/detail.aspx",
@@ -226,7 +226,7 @@
   {
     "id": "python",
     "title": "Python обучающие карточки, шпаргалка по синтаксису, функции и hotkeys PyCharm",
-    "image_thumb": "images/products/python/thumb.jpg",
+    "image_thumb": "images/products/python/1.png",
     "category": "Программирование",
     "link_ozon": "https://www.ozon.ru/product/python-obuchayushchie-kartochki-shpargalka-po-sintaksisu-funktsii-i-hotkeys-pycharm-3512101556/",
     "link_wb": "https://www.wildberries.ru/catalog/812020192/detail.aspx",
@@ -240,7 +240,7 @@
   {
     "id": "javascript",
     "title": "JavaScript обучающие карточки, шпаргалка по синтаксису, DOM, массивы и объекты",
-    "image_thumb": "images/products/javascript/thumb.jpg",
+    "image_thumb": "images/products/javascript/1.png",
     "category": "Программирование",
     "link_ozon": "https://www.ozon.ru/product/javascript-obuchayushchie-kartochki-shpargalka-po-sintaksisu-dom-massivy-i-obekty-3578195913/",
     "link_wb": "https://www.wildberries.ru/catalog/860838598/detail.aspx",
@@ -254,7 +254,7 @@
   {
     "id": "css_html",
     "title": "HTML и CSS - обучающие карточки A4, шпаргалка верстальщика, HTML теги, CSS свойства, справочник frontend",
-    "image_thumb": "images/products/css_html/thumb.jpg",
+    "image_thumb": "images/products/css_html/1.png",
     "category": "Программирование",
     "link_ozon": "https://www.ozon.ru/product/html-i-css-obuchayushchie-kartochki-a4-shpargalka-verstalshchika-html-tegi-css-svoystva-3585150061/",
     "link_wb": "https://www.wildberries.ru/catalog/864342472/detail.aspx",

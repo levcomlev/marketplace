@@ -1,5 +1,9 @@
 /* Страница товара: галерея, описание, кнопки */
 
+body {
+  background: #ffffff;
+}
+
 html {
   scroll-behavior: smooth;
 }
