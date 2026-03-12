@@ -23,18 +23,26 @@
         }).join('') +
         '</div>'
       : '';
+    var stageContent;
+    if (images.length > 1) {
+      var stripSlides = images.map(function (src, i) {
+        return '<div class="product-gallery__slide"><img class="product-gallery__image" src="' + escapeHtml(src) + '" alt="' + escapeHtml(productTitle) + '"></div>';
+      }).join('');
+      stageContent =
+        '<div class="product-gallery__viewport" id="product-gallery-viewport">' +
+          '<div class="product-gallery__strip" id="product-gallery-strip" style="--gallery-n: ' + images.length + '">' + stripSlides + '</div>' +
+        '</div>' +
+        '<div class="product-gallery__zone product-gallery__zone--prev" data-action="prev" aria-hidden="true">' +
+          '<span class="product-gallery__arrow product-gallery__arrow--prev" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></span></div>' +
+        '<div class="product-gallery__zone product-gallery__zone--next" data-action="next" aria-hidden="true">' +
+          '<span class="product-gallery__arrow product-gallery__arrow--next" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></span></div>';
+    } else {
+      stageContent = '<img class="product-gallery__image" id="product-gallery-img" src="' + escapeHtml(images[0]) + '" alt="' + escapeHtml(productTitle) + '">';
+    }
     return (
       '<div class="product-gallery">' +
         '<div class="product-gallery__stage">' +
-          '<div class="product-gallery__stage-inner" id="product-gallery-inner">' +
-            '<img class="product-gallery__image" id="product-gallery-img" src="' + escapeHtml(images[0]) + '" alt="' + escapeHtml(productTitle) + '">' +
-            (images.length > 1
-              ? '<div class="product-gallery__zone product-gallery__zone--prev" data-action="prev" aria-hidden="true">' +
-                '<span class="product-gallery__arrow product-gallery__arrow--prev" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></span></div>' +
-                '<div class="product-gallery__zone product-gallery__zone--next" data-action="next" aria-hidden="true">' +
-                '<span class="product-gallery__arrow product-gallery__arrow--next" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></span></div>'
-              : '') +
-          '</div>' +
+          '<div class="product-gallery__stage-inner" id="product-gallery-inner">' + stageContent + '</div>' +
         '</div>' +
         dots +
       '</div>'
@@ -44,14 +52,27 @@
   function bindGallery(images) {
     if (!images || images.length < 2) return;
     var current = 0;
-    var imgEl = document.getElementById('product-gallery-img');
+    var viewport = document.getElementById('product-gallery-viewport');
+    var strip = document.getElementById('product-gallery-strip');
     var innerEl = document.getElementById('product-gallery-inner');
     var dotsEl = document.getElementById('product-gallery-dots');
-    if (!imgEl || !innerEl) return;
+    if (!viewport || !strip || !innerEl) return;
+
+    function getViewportWidth() {
+      return viewport ? viewport.offsetWidth : 0;
+    }
+
+    function setStripTransform(offsetPx) {
+      if (strip) strip.style.transform = 'translateX(' + offsetPx + 'px)';
+    }
 
     function show(index) {
-      current = (index + images.length) % images.length;
-      imgEl.src = images[current];
+      current = Math.max(0, Math.min(index, images.length - 1));
+      var w = getViewportWidth();
+      if (strip) {
+        strip.style.transition = 'transform 0.25s ease-out';
+        setStripTransform(-current * w);
+      }
       if (dotsEl) {
         dotsEl.querySelectorAll('.product-gallery__dot').forEach(function (d, i) {
           d.classList.toggle('is-active', i === current);
@@ -62,6 +83,10 @@
     function go(delta) {
       show(current + delta);
     }
+
+    var w = getViewportWidth();
+    strip.style.transition = 'none';
+    setStripTransform(-current * w);
 
     innerEl.addEventListener('click', function (e) {
       var zone = e.target.closest('[data-action]');
@@ -81,6 +106,22 @@
     innerEl.addEventListener('touchstart', function (e) {
       if (e.touches && e.touches[0]) touchStartX = e.touches[0].clientX;
     }, { passive: true });
+    innerEl.addEventListener('touchmove', function (e) {
+      if (!e.touches || !e.touches[0]) return;
+      var currentX = e.touches[0].clientX;
+      var diffX = currentX - touchStartX;
+      if (Math.abs(diffX) > 10) {
+        e.preventDefault();
+        var width = getViewportWidth();
+        if (!width) return;
+        var n = images.length;
+        var maxDrag = width * 0.3;
+        if (current <= 0 && diffX > 0) diffX = Math.min(diffX, maxDrag);
+        if (current >= n - 1 && diffX < 0) diffX = Math.max(diffX, -maxDrag);
+        strip.style.transition = 'none';
+        setStripTransform(-current * width + diffX);
+      }
+    }, { passive: false });
     innerEl.addEventListener('touchend', function (e) {
       if (!e.changedTouches || !e.changedTouches[0]) return;
       var touchEndX = e.changedTouches[0].clientX;
@@ -88,6 +129,12 @@
       if (Math.abs(diff) > 50) {
         if (diff > 0) go(1);
         else go(-1);
+      } else {
+        var width = getViewportWidth();
+        if (strip && width) {
+          strip.style.transition = 'transform 0.25s ease-out';
+          setStripTransform(-current * width);
+        }
       }
     }, { passive: true });
   }
@@ -96,7 +143,10 @@
     if (!images || images.length === 0) return;
     var imgEl = document.getElementById('product-gallery-img');
     var innerEl = document.getElementById('product-gallery-inner');
-    if (!imgEl || !innerEl) return;
+    var dotsEl = document.getElementById('product-gallery-dots');
+    var galleryViewport = document.getElementById('product-gallery-viewport');
+    var galleryStrip = document.getElementById('product-gallery-strip');
+    if (!innerEl) return;
 
     var overlay = document.getElementById('product-gallery-overlay');
     if (!overlay) {
@@ -109,7 +159,7 @@
       overlay.innerHTML =
         '<div class="product-gallery-overlay__backdrop"></div>' +
         '<button type="button" class="product-gallery-overlay__close" aria-label="Закрыть"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></button>' +
-        '<img class="product-gallery-overlay__img" src="" alt="">' +
+        '<div class="product-gallery-overlay__viewport"><div class="product-gallery-overlay__strip"></div></div>' +
         (images.length > 1
           ? '<button type="button" class="product-gallery-overlay__arrow product-gallery-overlay__arrow--prev" aria-label="Предыдущее фото"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>' +
             '<button type="button" class="product-gallery-overlay__arrow product-gallery-overlay__arrow--next" aria-label="Следующее фото"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>'
@@ -117,7 +167,8 @@
       document.body.appendChild(overlay);
     }
 
-    var overlayImg = overlay.querySelector('.product-gallery-overlay__img');
+    var viewport = overlay.querySelector('.product-gallery-overlay__viewport');
+    var strip = overlay.querySelector('.product-gallery-overlay__strip');
     var backdrop = overlay.querySelector('.product-gallery-overlay__backdrop');
     var closeBtn = overlay.querySelector('.product-gallery-overlay__close');
     var prevBtn = overlay.querySelector('.product-gallery-overlay__arrow--prev');
@@ -126,39 +177,77 @@
     var isMobile = window.matchMedia('(max-width: 768px)').matches;
     var overlayIndex = 0;
 
+    function getViewportWidth() {
+      return viewport ? viewport.offsetWidth : 0;
+    }
+
+    function setStripTransform(offsetPx) {
+      if (!strip) return;
+      strip.style.transform = 'translateX(' + offsetPx + 'px)';
+    }
+
     function openOverlay() {
-      var currentSrc = imgEl.src || '';
-      overlayIndex = images.indexOf(currentSrc);
-      if (overlayIndex < 0) {
-        for (var i = 0; i < images.length; i++) {
-          if (currentSrc === images[i] || currentSrc.indexOf(images[i]) !== -1 || (currentSrc.split('?')[0].endsWith && currentSrc.split('?')[0].endsWith(images[i]))) {
-            overlayIndex = i;
-            break;
+      if (imgEl && imgEl.src) {
+        var currentSrc = imgEl.src;
+        overlayIndex = images.indexOf(currentSrc);
+        if (overlayIndex < 0) {
+          for (var i = 0; i < images.length; i++) {
+            if (currentSrc === images[i] || currentSrc.indexOf(images[i]) !== -1 || (currentSrc.split('?')[0].endsWith && currentSrc.split('?')[0].endsWith(images[i]))) {
+              overlayIndex = i;
+              break;
+            }
           }
+          if (overlayIndex < 0) overlayIndex = 0;
         }
-        if (overlayIndex < 0) overlayIndex = 0;
+      } else if (dotsEl) {
+        var activeDot = dotsEl.querySelector('.product-gallery__dot.is-active');
+        overlayIndex = activeDot ? parseInt(activeDot.getAttribute('data-index'), 10) : 0;
+        if (isNaN(overlayIndex)) overlayIndex = 0;
+      } else {
+        overlayIndex = 0;
       }
       overlay._images = images;
       overlay._index = overlayIndex;
-      overlayImg.src = images[overlayIndex];
-      overlayImg.alt = productTitle || '';
+      strip.style.setProperty('--overlay-n', String(images.length));
+      strip.innerHTML = '';
+      for (var i = 0; i < images.length; i++) {
+        var slide = document.createElement('div');
+        slide.className = 'product-gallery-overlay__slide';
+        var img = document.createElement('img');
+        img.className = 'product-gallery-overlay__img';
+        img.src = images[i];
+        img.alt = productTitle || '';
+        slide.appendChild(img);
+        strip.appendChild(slide);
+      }
       overlay.classList.add('is-open');
       document.body.classList.add('product-gallery-overlay-open');
       if (isMobile && overlay.requestFullscreen) {
         overlay.requestFullscreen().catch(function () {});
       }
+      var w = getViewportWidth();
+      strip.style.transition = 'none';
+      setStripTransform(-overlayIndex * w);
       if (prevBtn) prevBtn.style.display = overlayIndex > 0 ? '' : 'none';
       if (nextBtn) nextBtn.style.display = overlayIndex < images.length - 1 ? '' : 'none';
     }
 
     function closeOverlay() {
       if (overlay._images && overlay._index != null) {
-        var galleryImg = document.getElementById('product-gallery-img');
-        if (galleryImg) galleryImg.src = overlay._images[overlay._index];
-        var dotsEl = document.getElementById('product-gallery-dots');
-        if (dotsEl) dotsEl.querySelectorAll('.product-gallery__dot').forEach(function (d, i) {
+        var dots = document.getElementById('product-gallery-dots');
+        if (dots) dots.querySelectorAll('.product-gallery__dot').forEach(function (d, i) {
           d.classList.toggle('is-active', i === overlay._index);
         });
+        var strip = document.getElementById('product-gallery-strip');
+        var vp = document.getElementById('product-gallery-viewport');
+        if (strip && vp) {
+          var w = vp.offsetWidth;
+          strip.style.transition = 'none';
+          strip.style.transform = 'translateX(' + (-overlay._index * w) + 'px)';
+        } else {
+          var galleryImg = document.getElementById('product-gallery-img');
+          if (galleryImg) galleryImg.src = overlay._images[overlay._index];
+        }
       }
       overlay.classList.remove('is-open');
       document.body.classList.remove('product-gallery-overlay-open');
@@ -168,9 +257,13 @@
     }
 
     function showOverlayIndex(idx) {
-      overlayIndex = (idx + images.length) % images.length;
+      overlayIndex = Math.max(0, Math.min(idx, images.length - 1));
       overlay._index = overlayIndex;
-      overlayImg.src = images[overlayIndex];
+      var w = getViewportWidth();
+      if (strip) {
+        strip.style.transition = 'transform 0.25s ease-out';
+        setStripTransform(-overlayIndex * w);
+      }
       if (prevBtn) prevBtn.style.display = overlayIndex > 0 ? '' : 'none';
       if (nextBtn) nextBtn.style.display = overlayIndex < images.length - 1 ? '' : 'none';
     }
@@ -202,6 +295,24 @@
           touchStartY = e.touches[0].clientY;
         }
       }, { passive: true });
+      overlay.addEventListener('touchmove', function (e) {
+        if (!overlay._images || overlay._images.length < 2 || !e.touches || !e.touches[0]) return;
+        var currentX = e.touches[0].clientX;
+        var currentY = e.touches[0].clientY;
+        var diffX = currentX - touchStartX;
+        var diffY = currentY - touchStartY;
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
+          e.preventDefault();
+          var w = getViewportWidth();
+          if (!w) return;
+          var n = overlay._images.length;
+          var maxDrag = w * 0.3;
+          if (overlay._index <= 0 && diffX > 0) diffX = Math.min(diffX, maxDrag);
+          if (overlay._index >= n - 1 && diffX < 0) diffX = Math.max(diffX, -maxDrag);
+          strip.style.transition = 'none';
+          setStripTransform(-overlay._index * w + diffX);
+        }
+      }, { passive: false });
       overlay.addEventListener('touchend', function (e) {
         if (!e.changedTouches || !e.changedTouches[0]) return;
         var touchEndX = e.changedTouches[0].clientX;
@@ -212,9 +323,15 @@
           overlay._close();
           return;
         }
-        if (overlay._images && overlay._images.length >= 2 && Math.abs(diffX) > 50) {
-          if (diffX > 0) overlay._showIndex(overlay._index + 1);
-          else overlay._showIndex(overlay._index - 1);
+        if (overlay._images && overlay._images.length >= 2) {
+          var w = getViewportWidth();
+          if (Math.abs(diffX) > 50 && w) {
+            if (diffX > 0) overlay._showIndex(overlay._index + 1);
+            else overlay._showIndex(overlay._index - 1);
+          } else if (strip && w) {
+            strip.style.transition = 'transform 0.25s ease-out';
+            setStripTransform(-overlay._index * w);
+          }
         }
       }, { passive: true });
     }
