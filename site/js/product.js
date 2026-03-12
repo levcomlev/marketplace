@@ -289,19 +289,38 @@
       overlay._swipeBound = true;
       var touchStartX = 0;
       var touchStartY = 0;
+      var multiTouchGesture = false;
+      function isZoomed() {
+        var vv = window.visualViewport;
+        return vv && typeof vv.scale === 'number' && vv.scale > 1.05;
+      }
       overlay.addEventListener('touchstart', function (e) {
+        if (e.touches.length >= 2) {
+          multiTouchGesture = true;
+          return;
+        }
+        multiTouchGesture = false;
         if (e.touches && e.touches[0]) {
           touchStartX = e.touches[0].clientX;
           touchStartY = e.touches[0].clientY;
         }
       }, { passive: true });
       overlay.addEventListener('touchmove', function (e) {
-        if (!overlay._images || overlay._images.length < 2 || !e.touches || !e.touches[0]) return;
+        if (e.touches.length >= 2) {
+          multiTouchGesture = true;
+          var w = getViewportWidth();
+          if (strip && w) {
+            strip.style.transition = 'none';
+            setStripTransform(-overlay._index * w);
+          }
+          return;
+        }
+        if (isZoomed() || multiTouchGesture || !overlay._images || overlay._images.length < 2 || !e.touches || !e.touches[0]) return;
         var currentX = e.touches[0].clientX;
         var currentY = e.touches[0].clientY;
         var diffX = currentX - touchStartX;
         var diffY = currentY - touchStartY;
-        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 10) {
+        if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 25) {
           e.preventDefault();
           var w = getViewportWidth();
           if (!w) return;
@@ -314,6 +333,24 @@
         }
       }, { passive: false });
       overlay.addEventListener('touchend', function (e) {
+        if (e.touches.length >= 2) return;
+        if (multiTouchGesture) {
+          var w = getViewportWidth();
+          if (strip && w) {
+            strip.style.transition = 'none';
+            setStripTransform(-overlay._index * w);
+          }
+          if (e.touches.length === 0) multiTouchGesture = false;
+          return;
+        }
+        if (isZoomed()) {
+          var w = getViewportWidth();
+          if (strip && w) {
+            strip.style.transition = 'transform 0.25s ease-out';
+            setStripTransform(-overlay._index * w);
+          }
+          return;
+        }
         if (!e.changedTouches || !e.changedTouches[0]) return;
         var touchEndX = e.changedTouches[0].clientX;
         var touchEndY = e.changedTouches[0].clientY;
@@ -333,6 +370,7 @@
             setStripTransform(-overlay._index * w);
           }
         }
+        if (e.touches.length === 0) multiTouchGesture = false;
       }, { passive: true });
     }
 
